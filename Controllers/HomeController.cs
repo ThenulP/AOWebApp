@@ -15,6 +15,7 @@ namespace AOWebApp.Controllers
 
         public IActionResult Index()
         {
+            //throw new Exception("This is an error");
             return View();
         }
 

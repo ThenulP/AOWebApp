@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Test";
+    Layout = "_Layout";
+}
+
+<h1>Test</h1>
+
+<p>ViewBag.id2: @ViewBag.id</p>
+<p>ViewBag.searchText: @ViewBag.searchText</p>
+
+<form method="post" action="/Home/Test">
+    <input type="text" name="text" />
+    <button type="submit">save</button>
+
+</form>
+
+@{
+    var itemName = "keyboard";
+}
+
+<p>The item is @itemName</p>
+
+@{
+    itemName = "mouse";
+}
+
+<p>The item is @itemName</p>
+
+@{
+    var isActive = true;
+}
+
+@if (isActive)
+{
+    <p>The item is currently available</p>
+}
+else
+{
+    <p>The item is currently unavailable</p>
+}
+
