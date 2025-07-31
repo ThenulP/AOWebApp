@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "RazorTest";
+    Layout = "_Layout";
+}
+
+@{
+    var i = 1;
+    var j = 2;
+}
+
+<p>sum: @(i + j) </p>
+
+@{
+    string[] list = {"hello", "yo", "hi"};
+}
+
+<ul>
+    @foreach (var x in list)
+    {
+        <li>
+            greeting: @x
+        </li>
+    }
+</ul>
+
+@{
+    var coords = new[]
+    {
+        new { x = 1, y = 1 },
+        new { x = 2, y = 3 },
+        new { x = -1, y = 5 },
+        new { x = 4, y = -2 }
+    };
+}
+
+<ul>
+    @foreach (var point in coords)
+    {
+        <li>Coordinate: (@point.x, @point.y)</li>
+    }
+</ul>
+
+<hr />
+
+<form asp-controller="Test" asp-action="RazorTest" method="post">
+    <div>
+        <label>Id:</label>
+        <input type="number" name="id"/>
+    </div>
+    <div>
+        <label>Query Value:</label>
+        <input type="text"name="qval"/>
+    </div>
+    <div>
+        <label>Form Value:</label>
+        <input type="text" name="formval" />
+    </div>
+    <button type="submit">Submit Form</button>
+</form>
+
+<hr />
+
+<h3>Received Values</h3>
+<ul>
+    <li>Route id: @ViewBag.id</li>
+    <li>Query string value: @ViewBag.qval</li>
+    <li>Form value: @ViewBag.formval</li>
+</ul>

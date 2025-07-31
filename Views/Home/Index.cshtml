@@ -8,3 +8,11 @@
 </div>
 
 <a href="~/TestPage.html"> Test Page </a>
+
+<a href="/Test/RazorTest"> Razor Test </a>
+
+@Html.ActionLink(
+        linkText: "Razor Test Again",
+        actionName: "RazorTest",
+        controllerName: "Test"
+    )

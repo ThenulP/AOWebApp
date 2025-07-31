@@ -14,5 +14,15 @@ namespace AOWebApp.Controllers
 
             return View();
         }
+
+        [HttpGet("Test/RazorTest")]
+        [HttpPost("Test/RazorTest")]
+        public IActionResult RazorTest(int? id, string? qval, string? formval) 
+        {
+            ViewBag.id = id;
+            ViewBag.qval = qval;
+            ViewBag.formval = formval;
+            return View();
+        }
     }
 }
