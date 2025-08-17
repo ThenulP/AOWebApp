@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AOWebApp.Models.Item>
+﻿@model AOWebApp.ViewModels.ItemSearchViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -6,43 +6,73 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 
-<div class="container mb-3">
-    <form method="post" asp-action="Index" class="mb-4">
-        <input type="text"
-               class="form-control"
-               maxlength="100"
-               name="searchTerm"
-               placeholder="Search for an item..."/>
-        <div>
+    <form method="post" asp-controller="Items" asp-action="Index" class="row mb-2">
+        <div class="col-4">
+            <input asp-for="SearchText"
+                   type="text"
+                   class="form-control"
+                   maxlength="100"
+                   name="searchTerm"
+                   placeholder="Search for an item..." />
+        </div>
+        <div class="col-3">
+        <select asp-for="CategoryId" name="categoryId" class="form-select" asp-items="Model.CategoryList">
+                <option value="">All Categories...</option>
+            </select>
+        </div>
+        <div class="col-4">
             <button type="submit" class="btn btn-primary mt-2">Search</button>
-            <a asp-action="Index" method="get" class="btn btn-danger mt-2" >Reset</a>
+            <a asp-action="Create" class="btn btn-primary mt-2">Create New</a>
         </div>
     </form>
-</div>
 
 
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-         @foreach (var item in Model)
-         {
-               <div class="col-4">
-                <div class="card h-100" style="width: 18rem;">
+@if (ViewBag.SearchText != null)
+{
+    <p>Your search returned @Model.ItemRatings.Count() matching item@(Model.ItemRatings.Count() != 1 ? "s" : "")</p>
+}else{
+    <p>Showing @Model.ItemRatings.Count() items</p>
+}
+
+
+
+
+@if (Model.ItemRatings.Count() > 0)
+{
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var rating in Model.ItemRatings)
+            {
+                <div class="col-4">
+                    <div class="card h-100" style="width: 18rem;">
                         <div class="card-body">
-                            <h5 class="card-title">@item.ItemName</h5>
-                            <p class="card-text">@item.ItemDescription</p>
-                            <img class="img-fluid"  src="@item.ItemImage" alt="@item.ItemName">
+                            <h5 class="card-title">@rating.ItemObj.ItemName</h5>
+                            <p class="card-text">Description: @rating.ItemObj.ItemDescription</p>
+                            <p>Cost: @rating.ItemObj.ItemCost</p>
+                            <p>
+                                @if (rating.RatingCount > 0)
+                                {
+                                    <span>@rating.AvgRating across @rating.RatingCount Reviews</span>
+                                }
+                                else
+                                {
+                                    <span>This item has not been reviewed</span>
+                                }
+                            </p>
+                            <img class="img-fluid" src="@rating.ItemObj.ItemImage" alt="@rating.ItemObj.ItemName">
                         </div>
 
-                        
-                        <a asp-action="Details" asp-route-id="@item.ItemId" class="btn btn-primary mt-2">View Details</a>
+
+                        <a asp-action="Details" asp-route-id="@rating.ItemObj.ItemId" class="btn btn-primary mt-2">View Details</a>
 
                     </div>
-               </div>
-         }
+                </div>
+            }
+        </div>
     </div>
-</div>
-
+}
+else
+{
+    <h5 class="text-danger">Ooops, no items matched your search...</h5>
+}
